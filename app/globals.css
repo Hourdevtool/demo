@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* จำกัดที่ 2 บรรทัด */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
