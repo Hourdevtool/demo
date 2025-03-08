@@ -8,7 +8,7 @@ import {
   Paper,
   Divider,
 } from "@mui/material";
-
+import Image from "next/image";
 const TableCal = () => {
   const data = [
     {
@@ -52,10 +52,12 @@ const TableCal = () => {
                 </TableCell>
                 <TableCell className="border px-4 py-2">
                   <div className="flex flex-col md:flex-row md:space-x-4 items-start md:items-center">
-                    <img
+                    <Image
                       src={row.course?.image}
                       alt="Course Background"
-                      className="w-24 h-40 object-contain md:object-cover rounded-md "
+                      width={400}
+                      height={400}
+                      className=" object-contain md:object-cover rounded-md "
                     />
 
                     <div className="space-y-1">

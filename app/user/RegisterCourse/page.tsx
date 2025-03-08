@@ -1,6 +1,5 @@
 import React from 'react'
 import Navbar from '@/components/Navbar'
-import CourseList from '@/page/CourseList'
 import Guildpage from '@/components/Guildpage'
 import Footer from '@/components/Footer'
 import RegisCourse from '@/page/RegisCourse'

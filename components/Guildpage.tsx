@@ -1,6 +1,6 @@
 import { Facebook } from 'lucide-react'
 import React from 'react'
-
+import Image from 'next/image';
 function Guildpage() {
   return (
     <div className="w-full bg-indigo-950 px-4 py-8">
@@ -34,7 +34,7 @@ function Guildpage() {
             </p>
 
             <p className="flex items-center">
-              <img src='/line.svg' alt="line.svg"  />
+              <Image src='/line.svg' alt="line.svg"  width={20} height={2}   />
               <span className="ml-2">Line</span>
             </p>
           </div>

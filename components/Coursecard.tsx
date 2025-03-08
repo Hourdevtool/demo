@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { Card, CardContent, Avatar, Skeleton } from "@mui/material";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -53,11 +54,14 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, isLoading }) => {
           {isLoading ? (
             <Skeleton variant="rectangular" width="100%" height={160} />
           ) : (
-            <img
-              src={course?.background}
-              alt="Course Background"
-              className="w-full h-40 object-fill"
-            />
+            <div className="relative w-full h-40">
+              <Image
+                src={course?.background || "/placeholder.jpg"} // เพิ่ม placeholder image
+                alt="Course Background"
+                layout="fill"
+                objectFit="cover" // ใช้ objectFit="cover" เพื่อให้รูปภาพเต็ม container
+              />
+            </div>
           )}
           <CardContent>
             <div className="flex items-center gap-4">

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Lock } from "lucide-react";
 import {
   FormControl,
@@ -16,14 +16,14 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { useLoading } from "@/app/context/LoadingContext";
 import Link from "next/link";
+import Image from "next/image";
 function LoginForm() {
-
-  const {setLoading} = useLoading();
+  const { setIsLoading } = useLoading();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validateEmail, setValidateEmail] = useState<boolean>(false);
-  const {mail,  setmail, pass, setPass, role,  setRole, firstName,setFirstName,lastName,setLastName,} = useAuth();
+  const { setmail, setPass, setRole, setFirstName, setLastName } = useAuth();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -47,8 +47,7 @@ function LoginForm() {
     setEmail(value);
   };
 
-
-  const handlesubmit = async (e: any) => {
+  const handlesubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateEmail) {
       const Toast = Swal.mixin({
@@ -76,15 +75,15 @@ function LoginForm() {
       });
       return;
     }
-    setLoading(true);
-    try{
-      if(email==='user@gmail.com'&&password==='user'){
-        setmail(email)
-        setPass(password)
-        setRole('user')
-        setFirstName('User')
-        setLastName('User')
-        let redirectUrl = "/course"; 
+    setIsLoading(true);
+    try {
+      if (email === "user@gmail.com" && password === "user") {
+        setmail(email);
+        setPass(password);
+        setRole("user");
+        setFirstName("User");
+        setLastName("User");
+        const redirectUrl = "/course";
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -96,7 +95,7 @@ function LoginForm() {
           title: "เข้าสู่ระบบสำเร็จ",
         });
         router.push(redirectUrl);
-      }else{
+      } else {
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -108,12 +107,10 @@ function LoginForm() {
           title: "ขออภัยusernameหรือรหัสผ่านไม่ถูกต้อง",
         });
       }
-
-      }
-    catch(error){
+    } catch (error) {
       console.error(error);
-    }finally{
-      setLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -122,20 +119,25 @@ function LoginForm() {
         <div className="w-full max-w-screen-2xl rounded shadow-md z-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
             <div className="relative h-full">
-              <img
-                src="/pageform.png"
-                alt="Login Image"
-                className="w-full h-[200px] md:h-full lg:h-full object-cover md:rounded-lg"
-              />
+              <div className="w-full h-[200px] md:h-full lg:h-full relative md:rounded-lg">
+                <Image
+                  src="/pageform.png"
+                  alt="Login Image"
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
               <div className="absolute top-4 left-4 text-white p-4  rounded-lg">
                 <p className="font-semibold text-start text-xl md:text-2xl lg:text-3xl mb-4">
                   หมายเหตุ
                 </p>
 
                 <div className="flex flex-row items-center mb-4">
-                  <img
+                  <Image
                     src="/Hand Right.svg"
                     alt="Hand Right"
+                    width={40}
+                    height={40}
                     className="w-8 h-8 md:w-10 md:h-10 mr-3"
                   />
                   <p className="text-start text-sm md:text-lg lg:text-xl">
@@ -144,9 +146,11 @@ function LoginForm() {
                 </div>
 
                 <div className="flex flex-row items-center">
-                  <img
+                  <Image
                     src="/Hand Right.svg"
                     alt="Hand Right"
+                    width={40}
+                    height={40}
                     className="w-8 h-8 md:w-10 md:h-10 mr-3"
                   />
                   <p className="text-sm md:text-lg lg:text-xl">

@@ -1,26 +1,34 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 import { Backdrop, CircularProgress } from "@mui/material";
 
-const LoadingContext = createContext({
-  loading: false,
-  setLoading: (loading: boolean) => {},
-});
+interface LoadingContextType {
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const LoadingContext = createContext<LoadingContextType | null>(null);
 
 export const LoadingProvider = ({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   return (
-    <LoadingContext.Provider value={{ loading, setLoading }}>
+    <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
       {children}
-      <Backdrop sx={{ color: "#037bfc", zIndex: 9999,background:"#fff" }} open={loading}>
+      <Backdrop sx={{ color: "#037bfc", zIndex: 9999, background: "#fff" }} open={isLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     </LoadingContext.Provider>
   );
 };
 
-export const useLoading = () => useContext(LoadingContext);
+export const useLoading = () => {
+  const context = useContext(LoadingContext);
+  if (!context) {
+    throw new Error("useLoading must be used within a LoadingProvider");
+  }
+  return context;
+};

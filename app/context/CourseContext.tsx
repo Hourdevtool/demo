@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Children, createContext, useContext, useState } from "react";
+import React, {createContext, useContext, useState } from "react";
 
 interface ContextType {
   registeredCourseId: number | null;

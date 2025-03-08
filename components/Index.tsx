@@ -1,14 +1,15 @@
 "use client";
 import React, { useEffect } from "react";
-import { Phone, Facebook } from "lucide-react";
+import { Phone } from "lucide-react";
 import "aos/dist/aos.css";
 import dynamic from "next/dynamic";
 const Btn = dynamic(() => import("@/components/ui/Btn"), { ssr: false });
 import { useAuth } from "@/app/context/AuthContext";
+import Image from "next/image";
 import AOS from "aos";
 function Index() {
-  const {role} = useAuth();
-  console.log(role)
+  const { role } = useAuth();
+  console.log(role);
   useEffect(() => {
     AOS.init();
   }, []);
@@ -42,68 +43,84 @@ function Index() {
         </h1>
         <div className="flex justify-center">
           <p className="text-lg text-center max-w-[910px] font-thin leading-relaxed md:leading-loose opacity-80 text-gray-500">
-            แพลตฟอร์มที่ออกแบบมาเพื่อเสริมทักษะการเรียนรู้ของผู้เรียนโดยเฉพาะ สามารถเรียนได้
-            ทุกที่ ได้เวลา เมื่อเรียนเสร็จ สามารถรับใบ <span className="text-blue-700">Certificate </span>ได้เลย
+            แพลตฟอร์มที่ออกแบบมาเพื่อเสริมทักษะการเรียนรู้ของผู้เรียนโดยเฉพาะ
+            สามารถเรียนได้ ทุกที่ ได้เวลา เมื่อเรียนเสร็จ สามารถรับใบ{" "}
+            <span className="text-blue-700">Certificate </span>ได้เลย
             และผู้เรียนยังสามารถดูรายละเอียดข้อมูลต่างๆขอผู้สอนได้ก่อนตัดสินใจลงทะเบียนเรียน
-            <span className="text-blue-700">สมัครบริการฟรี</span>ไม่มีค่าใช้จ่ายใดๆทั้งสิ้น
+            <span className="text-blue-700">สมัครบริการฟรี</span>
+            ไม่มีค่าใช้จ่ายใดๆทั้งสิ้น
             <br />
             <b className="text-blue-700">
-              "เราพร้อมเป็นส่วนหนึ่งที่อยู่เบื้องหลังความสำเร็จของคุณ"
+              &quot;เราพร้อมเป็นส่วนหนึ่งที่อยู่เบื้องหลังความสำเร็จของคุณ&quot;
             </b>
           </p>
         </div>
       </div>
-     
+
       <div className=" my-4 w-full border border-gray-300"></div>
 
-        <div className=" mt-10 grid  grid-flow-co gird-row-3 gap-4 lg:mx-[300px] mb-10 px-5">
-          {banner.map((item, index) => (
+      <div className=" mt-10 grid  grid-flow-co gird-row-3 gap-4 lg:mx-[300px] mb-10 px-5">
+        {banner.map((item, index) => (
+          <div
+            key={index}
+            className={`w-full flex flex-col ${
+              index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+            } justify-between items-center px-4 overflow-hidden`}
+          >
             <div
-              key={index}
-              className={`w-full flex flex-col ${
-                index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-              } justify-between items-center px-4 overflow-hidden`}
+              data-aos="fade-right"
+              data-aos-offset="300"
+              data-aos-easing="ease-in-sine"
+              className="w-full lg:w-3/5 mt-10"
             >
-              <div
-                data-aos="fade-right"
-                data-aos-offset="300"
-                data-aos-easing="ease-in-sine"
-                className="w-full lg:w-3/5 mt-10"
-              >
-                <h3 className="text-blue-700 text-2xl mb-10 text-center lg:text-left">
-                  {item.title}
-                </h3>
-                <p className="text-lg text-center lg:text-left ">{item.desc}</p>
-                <div className="mt-4 flex justify-center lg:justify-start">
-                  {role==="user"?(
-                          <Btn name='เริ่มต้นเรียน' path='/course' Style='w-full md:w-40 text-center rounded-md bg-gradient-to-r from-blue-500 to-green-300 px-4 py-2 md:px-4 md:py-2 text-white hover:opacity-90' />
-                  ):(
-                    <Btn name='ลงทะเบียน' path='/' Style='w-full md:w-40 text-center rounded-md bg-gradient-to-r from-blue-500 to-green-300 px-4 py-2 md:px-4 md:py-2 text-white hover:opacity-90' />
-                  )}
-              
-                </div>
+              <h3 className="text-blue-700 text-2xl mb-10 text-center lg:text-left">
+                {item.title}
+              </h3>
+              <p className="text-lg text-center lg:text-left ">{item.desc}</p>
+              <div className="mt-4 flex justify-center lg:justify-start">
+                {role === "user" ? (
+                  <Btn
+                    name="เริ่มต้นเรียน"
+                    path="/course"
+                    Style="w-full md:w-40 text-center rounded-md bg-gradient-to-r from-blue-500 to-green-300 px-4 py-2 md:px-4 md:py-2 text-white hover:opacity-90"
+                  />
+                ) : (
+                  <Btn
+                    name="ลงทะเบียน"
+                    path="/"
+                    Style="w-full md:w-40 text-center rounded-md bg-gradient-to-r from-blue-500 to-green-300 px-4 py-2 md:px-4 md:py-2 text-white hover:opacity-90"
+                  />
+                )}
               </div>
+            </div>
 
-              <div
-                data-aos="fade-up-left"
-                className="w-full lg:w-2/5 flex justify-end items-center mt-10 lg:mt-0"
-              >
-                <img
+            <div
+              data-aos="fade-up-left"
+              className="w-full lg:w-2/5 flex justify-end items-center mt-10 lg:mt-0"
+            >
+              <div className="relative w-full h-96">
+                <Image
                   src={item.img}
                   alt={item.img}
-                  className="max-w-full h-auto object-contain"
+                  layout="fill"
+                  objectFit="contain"
                 />
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
 
       <div className="w-full min-h-[600px]  bg-gray-50 px-4 py-8 flex flex-col-reverse lg:flex-row items-center lg:justify-between">
         <div className="w-full lg:w-5/6 flex justify-center mt-6 lg:mt-0">
-          <img
+          <Image
             src="/contact.svg"
             alt="contact.svg"
-            className="max-w-3xl w-full h-auto object-contain"
+            width={16}
+            height={9}
+            layout="responsive"
+            objectFit="contain"
+            className="max-w-3xl w-full h-auto"
           />
         </div>
         <div className="w-full lg:w-1/2">

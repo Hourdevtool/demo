@@ -1,21 +1,21 @@
 "use client";
 import React, { useState } from "react";
 import { Avatar, MenuItem, Menu as MuiMenu, Fade } from "@mui/material";
-import { User, Settings, Book, Award, LogOut } from "lucide-react";
+import {  Book, Award, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/app/context/AuthContext";
 import { useLoading } from "@/app/context/LoadingContext";
 function Profile() {
   const { firstName, lastName, role, logout } = useAuth();
-  const { setLoading } = useLoading();
+  const { setIsLoading } = useLoading();
   const handleLogout = () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       logout();
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 

@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import { useAuth } from "@/app/context/AuthContext";
 import dynamic from "next/dynamic";
+import Image from 'next/image';
 
 const Btn = dynamic(() => import("@/components/ui/Btn"), { ssr: false });
 function Slide() {
@@ -64,12 +65,13 @@ function Slide() {
         className="container"
       >
         {courses.map((course, index) => (
-          <SwiperSlide>
+          <SwiperSlide key={index}>
             <div className="bg-white rounded-md shadow-md overflow-hidden flex flex-col lg:flex-row">
               <div className="w-full lg:w-1/2 aspect-w-16 aspect-h-9">
-                <img
+                <Image
                   src={course.background}
                   alt="รูปภาพ 1"
+                  width={500} height={500}
                   className="w-full h-full object-contain rounded-t-md lg:rounded-l-md lg:rounded-t-none"
                 />
               </div>

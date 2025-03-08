@@ -1,6 +1,7 @@
 "use client";
-import React, { useReducer, useState, useRef, useEffect } from "react";
-import {  IconButton } from "@mui/material";
+import React, { useReducer, useState } from "react";
+import Image from "next/image";
+import { IconButton } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -12,9 +13,18 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Swal from "sweetalert2";
 import { useLoading } from "@/app/context/LoadingContext";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
-const reducer = (state: any, action: any) => {
+interface State {
+  [key: string]: string;
+}
+
+type Action = {
+  name: string;
+  value: string;
+};
+
+const reducer = (state: State, action: Action) => {
   return { ...state, [action.name]: action.value };
 };
 const defaultState = {
@@ -38,7 +48,7 @@ type error = {
 };
 
 function SingupFrom() {
-  const { setLoading } = useLoading();
+  const { setIsLoading } = useLoading();
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, {});
   const [active, setActive] = useState<boolean>(false);
@@ -82,7 +92,10 @@ function SingupFrom() {
     }
   };
 
-  const handlechange = (e: any, pattern: RegExp) => {
+  const handlechange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    pattern: RegExp
+  ) => {
     const { name, value } = e.target;
     if (pattern.test(value) || value === "") {
       dispatch({ name, value });
@@ -91,7 +104,7 @@ function SingupFrom() {
     setApiErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const sentdata = async (e: any) => {
+  const sentdata = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newErrors: error = { ...errors };
@@ -120,7 +133,7 @@ function SingupFrom() {
       });
       return;
     }
-    setLoading(true);
+    setIsLoading(true);
     try {
       const Toast = Swal.mixin({
         toast: true,
@@ -132,11 +145,11 @@ function SingupFrom() {
         icon: "success",
         title: "ลงทะเบียนสำเร็จ",
       });
-      router.push('/course')
+      router.push("/course");
     } catch (error) {
       console.error(error);
-    } finally{
-      setLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -161,15 +174,19 @@ function SingupFrom() {
       <div className="flex justify-center items-center  min-h-screen w-full p-4 lg:p-10">
         <div className="w-full max-w-6xlrounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
           <div className="relative w-full md:w-1/2  text-white flex flex-col  p-8">
-            <img
+            <Image
               src="/pageform.png"
               alt="Registration"
+              width={600} // กำหนดความกว้าง
+              height={400} // กำหนดความสูง
               className="absolute top-0 left-0 w-full h-full object-cover md:rounded-lg"
             />
             <div className="relative z-10">
               <h2 className="text-2xl font-bold">หมายเหตุ</h2>
               <div className="mt-4 flex items-center">
-                <img
+                <Image
+                  width={20}
+                  height={20}
                   src="/Hand Right.svg"
                   alt="icon"
                   className="w-6 h-6 mr-2"
@@ -179,7 +196,9 @@ function SingupFrom() {
                 </p>
               </div>
               <div className="mt-4 flex items-center">
-                <img
+                <Image
+                  width={20}
+                  height={20}
                   src="/Hand Right.svg"
                   alt="icon"
                   className="w-6 h-6 mr-2"

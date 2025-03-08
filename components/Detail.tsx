@@ -12,6 +12,34 @@ import { useDropzone } from "react-dropzone";
 import { notFound } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import { useCourse } from "@/app/context/CourseContext";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Swal from "sweetalert2";
+import AccordionGroup from "@mui/joy/AccordionGroup";
+import Accordion from "@mui/joy/Accordion";
+import AccordionDetails from "@mui/joy/AccordionDetails";
+import AccordionSummary from "@mui/joy/AccordionSummary";
+import { useCallback, useState, useEffect } from "react";
+
+interface DetailProps {
+  courseId: number;
+}
+
+interface Course {
+  id: number;
+  resuser: number;
+  background: string;
+  desc: string;
+  profile: string;
+  instructor: string;
+  title: string;
+  category: string;
+  registrationDate: string;
+  trainingDate: string;
+  maxuser: number;
+  time: string;
+}
+
 const courses = [
   {
     id: 1,
@@ -42,31 +70,45 @@ const courses = [
     time: "08:00-09:00",
   },
 ];
-import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
-import AccordionGroup from "@mui/joy/AccordionGroup";
-import Accordion from "@mui/joy/Accordion";
-import AccordionDetails from "@mui/joy/AccordionDetails";
-import AccordionSummary from "@mui/joy/AccordionSummary";
-import { useCallback, useState,useEffect } from "react";
-
-interface DetailProps {
-  courseId: number;
-}
 
 function Detail({ courseId }: DetailProps) {
   const { regisCourse, registeredCourseId } = useCourse();
   const { role } = useAuth();
   const router = useRouter();
-  const course = courses.find((c) => c.id === courseId);
+  const course = courses.find((c) => c.id === courseId) as Course;
   if (!course) return notFound();
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+
   const [isClient, setIsClient] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
-  
+
+  const onFileAccepted = useCallback((file: File) => {
+    setUploadedFile(file);
+    alert(`ไฟล์ PDF ที่อัปโหลด: ${file.name}`);
+  }, []);
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      if (acceptedFiles.length > 0) {
+        onFileAccepted(acceptedFiles[0]);
+      }
+    },
+    [onFileAccepted]
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "application/pdf": [".pdf"],
+    },
+    maxFiles: 1,
+  });
+
+
+
   const hadleSubmit = () => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -127,27 +169,6 @@ function Detail({ courseId }: DetailProps) {
         }
       });
   };
-  const onFileAccepted = (file: File) => {
-    setUploadedFile(file);
-    alert(`ไฟล์ PDF ที่อัปโหลด: ${file.name}`);
-  };
-
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      if (acceptedFiles.length > 0) {
-        onFileAccepted(acceptedFiles[0]); // ส่งไฟล์แรกที่รับเข้ามา
-      }
-    },
-    [onFileAccepted]
-  );
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      "application/pdf": [".pdf"], // รับเฉพาะไฟล์ PDF
-    },
-    maxFiles: 1, // รับไฟล์ได้เพียง 1 ไฟล์
-  });
 
   return (
     <div className="flex justify-center">
@@ -177,11 +198,14 @@ function Detail({ courseId }: DetailProps) {
             </div>
           </div>
           <div className="md:w-2/3 flex justify-center md:justify-end">
-            <img
-              src={course.background}
-              alt="background Course"
-              className="max-w-full h-auto rounded-md"
-            />
+            <div className="relative w-96 h-64 rounded-md">
+              <Image
+                src={course.background}
+                alt="background Course"
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
           </div>
         </div>
 
@@ -252,6 +276,7 @@ function Detail({ courseId }: DetailProps) {
                         <p>ลากและวางไฟล์ PDF ที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
                       )}
                     </div>
+                    {uploadedFile && <p>ไฟล์ที่อัปโหลด: {uploadedFile.name}</p>}{" "}
                   </AccordionDetails>
                 </Accordion>
               </AccordionGroup>
@@ -313,7 +338,7 @@ function Detail({ courseId }: DetailProps) {
                 </div>
                 <Typography variant="subtitle2" className="font-semibold">
                   จำนวนที่รับ:{" "}
-                  {isClient &&registeredCourseId === course.id
+                  {isClient && registeredCourseId === course.id
                     ? course.resuser + 1
                     : course.resuser}
                   /{course.maxuser} คน
@@ -350,7 +375,7 @@ function Detail({ courseId }: DetailProps) {
                 className="mt-4 w-full  bg-amber-500"
                 onClick={() => router.push("https://www.zoom.com/")}
               >
-                    เข้าอบรมที่นี่
+                เข้าอบรมที่นี่
               </Button>
             </div>
           </div>
