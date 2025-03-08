@@ -8,7 +8,7 @@ import {
   SendHorizontal,
   Check,
 } from "lucide-react";
-import { useDropzone } from "react-dropzone";
+import FileUploader from "./ui/FileUploader";
 import { notFound } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import { useCourse } from "@/app/context/CourseContext";
@@ -19,7 +19,6 @@ import AccordionGroup from "@mui/joy/AccordionGroup";
 import Accordion from "@mui/joy/Accordion";
 import AccordionDetails from "@mui/joy/AccordionDetails";
 import AccordionSummary from "@mui/joy/AccordionSummary";
-import { useCallback, useState, useEffect } from "react";
 
 interface DetailProps {
   courseId: number;
@@ -77,38 +76,6 @@ function Detail({ courseId }: DetailProps) {
   const router = useRouter();
   const course = courses.find((c) => c.id === courseId) as Course;
   if (!course) return notFound();
-
-  const [isClient, setIsClient] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const onFileAccepted = useCallback((file: File) => {
-    setUploadedFile(file);
-    alert(`ไฟล์ PDF ที่อัปโหลด: ${file.name}`);
-  }, []);
-
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      if (acceptedFiles.length > 0) {
-        onFileAccepted(acceptedFiles[0]);
-      }
-    },
-    [onFileAccepted]
-  );
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      "application/pdf": [".pdf"],
-    },
-    maxFiles: 1,
-  });
-
-
-
   const hadleSubmit = () => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -169,6 +136,7 @@ function Detail({ courseId }: DetailProps) {
         }
       });
   };
+
 
   return (
     <div className="flex justify-center">
@@ -246,7 +214,7 @@ function Detail({ courseId }: DetailProps) {
                 เนื้อหาในคอร์ส
               </Typography>
             </div>
-            {isClient && registeredCourseId === course.id ? (
+            {registeredCourseId === course.id ? (
               <AccordionGroup sx={{ maxWidth: 600 }}>
                 <Accordion>
                   <AccordionSummary>สไลด์การสอน</AccordionSummary>
@@ -261,22 +229,7 @@ function Detail({ courseId }: DetailProps) {
                 <Accordion>
                   <AccordionSummary>การส่งงาน</AccordionSummary>
                   <AccordionDetails>
-                    <div
-                      {...getRootProps()}
-                      className={`p-4 border-2 border-dashed rounded-lg text-center ${
-                        isDragActive
-                          ? "border-blue-500 bg-blue-50"
-                          : "border-gray-300 bg-gray-50"
-                      }`}
-                    >
-                      <input {...getInputProps()} />
-                      {isDragActive ? (
-                        <p>วางไฟล์ PDF ที่นี่...</p>
-                      ) : (
-                        <p>ลากและวางไฟล์ PDF ที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
-                      )}
-                    </div>
-                    {uploadedFile && <p>ไฟล์ที่อัปโหลด: {uploadedFile.name}</p>}{" "}
+                   <FileUploader />
                   </AccordionDetails>
                 </Accordion>
               </AccordionGroup>
@@ -298,7 +251,7 @@ function Detail({ courseId }: DetailProps) {
               <Typography variant="body2" className="text-amber-500">
                 หลักสูตรเรียนฟรีไม่มีค่าใช้จ่าย
               </Typography>
-              {isClient && role === "" ? (
+              {role === "" ? (
                 <Button
                   variant="contained"
                   className="mt-4 w-full  bg-red-700"
@@ -306,7 +259,7 @@ function Detail({ courseId }: DetailProps) {
                 >
                   กรุณาเข้าสู่ระบบ
                 </Button>
-              ) : isClient && registeredCourseId === course.id ? (
+              ) : registeredCourseId === course.id ? (
                 <div className="flex flex-row justify-center  mt-4 opacity-50 text-2xl ">
                   <span className="mr-3 ">คุณได้ลงทะเบียนเรียบร้อยเเล้ว </span>
                   <Check />
@@ -338,7 +291,7 @@ function Detail({ courseId }: DetailProps) {
                 </div>
                 <Typography variant="subtitle2" className="font-semibold">
                   จำนวนที่รับ:{" "}
-                  {isClient && registeredCourseId === course.id
+                  {registeredCourseId === course.id
                     ? course.resuser + 1
                     : course.resuser}
                   /{course.maxuser} คน

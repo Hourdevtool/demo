@@ -25,7 +25,8 @@ interface CourseCardProps {
 const CourseCard: React.FC<CourseCardProps> = ({ course, isLoading }) => {
   const router = useRouter();
   const handleClick = () => {
-    router.push(`/course/course-detail/${course?.id}`);
+    if (!course?.id) return;
+    router.push(`/course/course-detail/${String(course.id)}`);
   };
   const [isClient, setIsClient] = useState(false);
   const style =
