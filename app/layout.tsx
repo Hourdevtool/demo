@@ -8,8 +8,8 @@ import { LoadingProvider } from "./context/LoadingContext";
 import { AuthProvider } from "./context/AuthContext";
 import { CourseProvider } from "./context/CourseContext";
 export const metadata: Metadata = {
-  title: "Myapp",
-  description: "E-larning MyWebApp",
+  title: "NitedX",
+  description: "ระบบนิเวศการเรียนรู้ดิจิทัลสำหรับการนิเทศการศึกษาอาชีวศึกษา",
   keywords: "E-larning",
   icons: [
     { rel: "icon", type: "image/svg+xml", url: "/logo.svg", sizes: "512x512" },

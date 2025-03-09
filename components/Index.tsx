@@ -39,11 +39,11 @@ function Index() {
     <>
       <div className="mt-10 flex flex-col items-center space-y-5 w-full">
         <h1 className="text-3xl font-bold text-blue-700 text-center md:text-4xl">
-          แพลตฟอร์มการเรียนออนไลน์เพื่อพัฒนา SKILL ของผู้เรียน
+          ระบบนิเวศการเรียนรู้ดิจิทัลสำหรับการนิเทศการศึกษาอาชีวศึกษา
         </h1>
         <div className="flex justify-center">
           <p className="text-lg text-center max-w-[910px] font-thin leading-relaxed md:leading-loose opacity-80 text-gray-500">
-            แพลตฟอร์มที่ออกแบบมาเพื่อเสริมทักษะการเรียนรู้ของผู้เรียนโดยเฉพาะ
+            ระบบที่ออกแบบมาเพื่อเสริมทักษะการเรียนรู้ของผู้เรียนโดยเฉพาะ
             สามารถเรียนได้ ทุกที่ ได้เวลา เมื่อเรียนเสร็จ สามารถรับใบ{" "}
             <span className="text-blue-700">Certificate </span>ได้เลย
             และผู้เรียนยังสามารถดูรายละเอียดข้อมูลต่างๆขอผู้สอนได้ก่อนตัดสินใจลงทะเบียนเรียน
