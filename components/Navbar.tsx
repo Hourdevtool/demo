@@ -5,11 +5,11 @@ import { useAuth } from "@/app/context/AuthContext";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Profile from "./ui/Profile";
-
+import Image from "next/image";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
-  const { role} = useAuth();
+  const { role } = useAuth();
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -58,10 +58,15 @@ function Navbar() {
               </button>
             </div>
 
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 flex">
               <Link href="/">
-                <div className="hidden h-12 w-12 rounded-full bg-gray-300 md:flex items-center justify-center">
-                  {/* <img src="https://via.placeholder.com/24x24" alt="Logo" /> */}
+                <div className="hidden h-12 w-12 rounded-full  md:flex items-center justify-center relative overflow-hidden">
+                  <Image
+                    src={"/logo.svg"}
+                    alt={"my logo"}
+                    layout="fill"
+                    objectFit="cover"
+                  />
                 </div>
               </Link>
             </div>
