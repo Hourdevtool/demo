@@ -9,7 +9,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { CourseProvider } from "./context/CourseContext";
 export const metadata: Metadata = {
   title: "NitedX",
-  description: "ระบบนิเนศการเรียนรู้ดิจิทัลสำหรับการนิเทศการศึกษาอาชีวศึกษา",
+  description: "ระบบนิเวศการเรียนรู้ดิจิทัลสำหรับการนิเทศการศึกษาอาชีวศึกษา",
   keywords: "E-larning",
   icons: [
     { rel: "icon", type: "image/svg+xml", url: "/logo.svg", sizes: "512x512" },
