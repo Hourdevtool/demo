@@ -133,7 +133,7 @@ function Navbar() {
                     <Link href="/aunth/login" onClick={() => setIsOpen(false)}>
                       เข้าสู่ระบบ
                     </Link>
-                    <Link href="/aunth/singup" onClick={() => setIsOpen(false)}>
+                    <Link href="/aunth/signup" onClick={() => setIsOpen(false)}>
                       ลงทะเบียน
                     </Link>
                   </div>

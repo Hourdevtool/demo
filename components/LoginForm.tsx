@@ -118,15 +118,14 @@ function LoginForm() {
       <div className="flex justify-center items-center min-h-screen w-full lg:p-10">
         <div className="w-full max-w-screen-2xl rounded shadow-md z-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
-            <div className="relative h-full">
-              <div className="w-full h-[200px] md:h-full lg:h-full relative md:rounded-lg">
+            <div className="relative h-full">  
                 <Image
                   src="/pageform.png"
                   alt="Login Image"
-                  layout="fill"
-                  objectFit="cover"
+                  width={600} 
+                  height={400} 
+                  className="w-full h-[200px] md:h-full lg:h-full object-cover md:rounded-lg"
                 />
-              </div>
               <div className="absolute top-4 left-4 text-white p-4  rounded-lg">
                 <p className="font-semibold text-start text-xl md:text-2xl lg:text-3xl mb-4">
                   หมายเหตุ
@@ -224,7 +223,7 @@ function LoginForm() {
                   เข้าสู่ระบบ
                 </button>
                 <a
-                  href="/forgot-password"
+                  href="/aunth/login"
                   className="text-blue-500 text-sm my-4 flex"
                 >
                   <Lock />
