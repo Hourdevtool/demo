@@ -166,21 +166,21 @@ function Detail({ courseId }: DetailProps) {
             </div>
           </div>
           <div className="md:w-2/3 flex justify-center md:justify-end">
-            <div className="relative w-96 h-64 rounded-md">
+          
               <Image
                 src={course.background}
                 alt="background Course"
-                layout="fill"
-                objectFit="cover"
+                width={400}
+                height={400}
+                className="relative rounded-md mb-3"
               />
-            </div>
           </div>
         </div>
 
         <Divider className="my-4" />
 
         {/* ส่วนเนื้อหา */}
-        <div className=" bg-white rounded-xl p-8 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className=" bg-white rounded-xl p-8 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <div className="flex items-center mb-2">
               <div className="mr-3">
@@ -254,7 +254,8 @@ function Detail({ courseId }: DetailProps) {
               {role === "" ? (
                 <Button
                   variant="contained"
-                  className="mt-4 w-full  bg-red-700"
+                  sx={{ bgcolor: '#b91c1c',mt:4}}
+                  className="w-full"
                   onClick={() => router.push("/aunth/login")}
                 >
                   กรุณาเข้าสู่ระบบ
@@ -325,7 +326,8 @@ function Detail({ courseId }: DetailProps) {
               </div>
               <Button
                 variant="contained"
-                className="mt-4 w-full  bg-amber-500"
+                sx={{ bgcolor: '#f59e0b',mt:4}}
+                className="w-full"
                 onClick={() => router.push("https://www.zoom.com/")}
               >
                 เข้าอบรมที่นี่
